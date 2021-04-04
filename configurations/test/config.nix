@@ -34,4 +34,9 @@
       fs = "swap";
     };
   };
+
+  user = {
+    name = "dsilvers";
+    groups = [ "wheel" ];
+  };
 }

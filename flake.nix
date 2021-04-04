@@ -33,7 +33,7 @@
           nixpkgs.lib.nixosSystem {
             inherit system;
             modules = [
-              (import ./configurations)
+              (import ./configurations sysconfig)
               (
                 { config, ... }: {
                   nixpkgs.overlays = overlays;
@@ -46,13 +46,22 @@
 
             # extraModules = [ (import ./modules) ];
           };
+      loadConfig = hostname: let
+        config = import ./configurations + "/${hostname}" + /config.nix;
+      in
+        config // {
+          hostname = hostname;
+        };
     in
       {
         nixosConfigurations = {
           test = make-nixos-system {
-            sysconfig = (import ./configurations/test/config.nix);
+            sysconfig = loadConfig "test";
             nixpkgs = inputs.nixpkgs;
             system = "x86_64-linux";
+            modules = [
+              (import ./configurations/test)
+            ];
           };
         };
       };

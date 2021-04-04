@@ -2,9 +2,10 @@
 # correctly configures a nixos system for things like swap, filesystems,
 # crypt on startup, etc.
 
-{ hostname, config }:
+config:
 with builtins;
 let
+  hostname = config.hostname;
   lvs = attrNames config.lvm;
   swaps = filter (lv: config.lvm.${lv}.fs == "swap") lvs;
   fses = filter (lv: config.lvm.${lv}.fs != "swap") lvs;
