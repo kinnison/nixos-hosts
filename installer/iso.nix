@@ -16,6 +16,7 @@
     yubikey-personalization
     yubico-pam
     nodejs-12_x
+    gnumake
   ];
 
   nix = {
