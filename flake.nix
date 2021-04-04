@@ -56,6 +56,17 @@
     in
       {
         nixosConfigurations = {
+          installer = let
+            nixpkgs = inputs.nixpkgs;
+          in
+            nixpkgs.lib.nixosSystem {
+              system = "x86_64-linux";
+              modules = [
+                "${nixpkgs.outPath}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+                "${nixpkgs.outPath}/nixos/modules/installer/cd-dvd/channel.nix"
+                ./installer/iso.nix
+              ];
+            };
           test = make-nixos-system {
             sysconfig = loadConfig "test";
             nixpkgs = inputs.nixpkgs;
