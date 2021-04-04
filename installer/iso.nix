@@ -18,6 +18,13 @@
     nodejs-12_x
   ];
 
+  nix = {
+    package = pkgs.nixFlakes;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+  };
+
   services.udev.packages = [ pkgs.yubikey-personalization ];
 
   services.sshd.enable = true;

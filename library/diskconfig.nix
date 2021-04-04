@@ -3,6 +3,7 @@
 # crypt on startup, etc.
 
 config:
+{ ... }:
 with builtins;
 let
   hostname = config.hostname;

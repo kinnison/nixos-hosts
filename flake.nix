@@ -34,12 +34,13 @@
             inherit system;
             modules = [
               (import ./configurations sysconfig)
+              inputs.home-manager.nixosModules.home-manager
               (
                 { config, ... }: {
                   nixpkgs.overlays = overlays;
                   home-manager.useGlobalPkgs = false;
                   home-manager.useUserPackages = true;
-                  # home-manager.users.username = ...
+                  #home-manager.users."${sysconfig.username}" = ...
                 }
               )
             ] ++ modules;
@@ -47,7 +48,7 @@
             # extraModules = [ (import ./modules) ];
           };
       loadConfig = hostname: let
-        config = import ./configurations + "/${hostname}" + /config.nix;
+        config = import (./configurations + "/${hostname}" + /config.nix);
       in
         config // {
           hostname = hostname;

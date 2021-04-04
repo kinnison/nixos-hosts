@@ -11,7 +11,7 @@ let
   parted-script = ''
     _parted_script () {
         echo "mklabel ${if is-efi then "gpt" else "msdos"}"
-        echo "mkpart 1 1 ${bootsize}
+        echo "mkpart 1 1 ${bootsize}"
         echo "set 1 ${if is-efi then "esp" else "legacy_boot"} on"
         echo "mkpart 2 ${bootsize} 100%"
         echo "set 2 lvm on"
@@ -97,7 +97,7 @@ let
       volume: config.lvm.${volume}.fs == "swap"
     ) lvm-volumes
   );
-  mount-actions = all-swaps ++ map ({ mount, device }: "mkdir -p /mnt${mount}\nmount ${device} ${mount}") sorted-filesystems;
+  mount-actions = all-swaps ++ map ({ mount, device }: "mkdir -p /mnt${mount}\nmount ${device} /mnt${mount}") sorted-filesystems;
 
   mount-everything = ''
     echo "*** Mounting everything up..."
