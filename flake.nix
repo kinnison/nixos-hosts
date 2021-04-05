@@ -14,6 +14,12 @@
       url = "github:nix-community/home-manager/release-20.09";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # We use sops for secrets handling
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs:
@@ -34,6 +40,7 @@
             inherit system;
             modules = [
               (import ./configurations sysconfig)
+              inputs.sops-nix.nixosModules.sops
               inputs.home-manager.nixosModules.home-manager
               (
                 { config, ... }: {
@@ -64,6 +71,7 @@
               modules = [
                 "${nixpkgs.outPath}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
                 "${nixpkgs.outPath}/nixos/modules/installer/cd-dvd/channel.nix"
+                inputs.sops-nix.nixosModules.sops
                 ./installer/iso.nix
               ];
             };
