@@ -52,6 +52,7 @@
   hardware.pulseaudio.enable = true;
 
   services.udev.packages = with pkgs; [ yubikey-personalization ];
+  services.openssh.enable = true;
 
   environment.systemPackages = with pkgs; [
     git # always need git

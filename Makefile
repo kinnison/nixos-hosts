@@ -9,9 +9,28 @@ iso:
 gc:
 	nix-collect-garbage
 
+help:
+	@echo "Everything will sudo as needed, no need for you to do so"
+	@echo "---"
+	@echo "In general, run the following in-order"
+	@echo "---"
+	@echo "prepare-gpg - will prepare the system for GPG"
+	@echo "disk - will set up the disk, needs HOST=..."
+	@echo "copy-config - will copy the config to /mnt, needs disk"
+	@echo "provision-ssh - will provision the SSH host keys, needs HOST=... and prepare-gpg"
+	@echo "install - will do the nixos installation, needs HOST=... and all the above"
+
+# Needs --impure because it's a sodding pain
+install:
+	sudo nixos-install --root /mnt --flake "/mnt/etc/nixos#$(HOST)" -v --impure
+
+copy-config:
+	sudo mkdir -p /mnt/etc/nixos
+	sudo cp -av . /mnt/etc/nixos
+
 disk: configurations/$(HOST)/config.nix
 	SCRIPT=$$(nix eval --impure --raw --expr 'builtins.toFile "disk.sh" (import installer/prep-disk.nix { hostname = "$(HOST)"; config = (import configurations/$(HOST)/config.nix);})'); \
-	bash -x $$SCRIPT
+	sudo bash $$SCRIPT
 
 prepare-gpg:
 	for KEY in keys/users/*.asc; do gpg --import $$KEY; done

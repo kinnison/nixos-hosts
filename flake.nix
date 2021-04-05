@@ -23,6 +23,15 @@
 
     # Utility flake used for internal management
     flake-utils.url = "github:numtide/flake-utils";
+
+    # My dotfiles
+    dotfiles = {
+      url = "github:kinnison/dotfiles";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+      inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
+      inputs.flake-utils.follows = "flake-utils";
+    };
   };
 
   outputs = inputs:
@@ -50,7 +59,8 @@
                   nixpkgs.overlays = overlays;
                   home-manager.useGlobalPkgs = false;
                   home-manager.useUserPackages = true;
-                  #home-manager.users."${sysconfig.username}" = ...
+                  home-manager.users."${sysconfig.user.name}" =
+                    inputs.dotfiles.homeConfigurations.${config.networking.hostName};
                 }
               )
             ] ++ modules;
