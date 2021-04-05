@@ -48,3 +48,26 @@ provision-ssh: configurations/$(HOST)/secrets/secrets.yaml
 	sudo chown root: /mnt/etc/ssh/*
 	sudo chmod 0600 /mnt/etc/ssh/*
 	sudo chmod 0644 /mnt/etc/ssh/*.pub
+
+gen-ssh-keys:
+	echo "Preparing host keys for $(HOST)"
+	mkdir -p configurations/$(HOST)/files
+	mkdir -p configurations/$(HOST)/secrets
+	if ! test -r configurations/$(HOST)/secrets/secrets.yaml ; then \
+	  echo OK; \
+	else \
+	  exit 1; \
+	fi
+	touch configurations/$(HOST)/secrets/secrets.yaml
+	for keytype in ed25519 rsa; do \
+		if [ ! -r configurations/$(HOST)/files/ssh_host_$${keytype}_key.pub ]; then \
+			ssh-keygen -t $${keytype} -N '' -f configurations/$(HOST)/files/ssh_host_$${keytype}_key; \
+			(echo "ssh_host_$${keytype}_key: |"; \
+			 sed -e's/^/    /' < configurations/$(HOST)/files/ssh_host_$${keytype}_key) >> configurations/$(HOST)/secrets/secrets.yaml; \
+			$(RM) -f configurations/$(HOST)/files/ssh_host_$${keytype}_key; \
+		fi \
+	done
+	nix develop -c sops -e -i configurations/$(HOST)/secrets/secrets.yaml
+	mkdir -p keys/hosts
+	nix develop -c sops -d --extract '["ssh_host_rsa_key"]' configurations/$(HOST)/secrets/secrets.yaml | \
+	    nix-shell -p ssh-to-pgp --run "ssh-to-pgp -o keys/hosts/$(HOST).asc"

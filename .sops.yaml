@@ -7,3 +7,9 @@ creation_rules:
       - pgp:
           - *daniel
           - *test
+
+# This group should always be last and is a fallback to use
+# just the primary GPG key
+  - key_groups:
+      - pgp:
+          - *daniel
