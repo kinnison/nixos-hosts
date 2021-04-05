@@ -1,0 +1,9 @@
+keys:
+  - &daniel 19568523759E2A2858F4606B3CCEBABE206C3B69
+  - &test 6b29b1f4460ac24e53795ace36ef43006bdcca1a
+creation_rules:
+  - path_regex: configurations/test/secrets/[^/]+\.yaml$
+    key_groups:
+      - pgp:
+          - *daniel
+          - *test

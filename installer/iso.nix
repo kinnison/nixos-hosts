@@ -19,7 +19,11 @@
     yubico-pam
     nodejs-12_x
     gnumake
+    pinentry
   ];
+
+  programs.gnupg.agent.enable = true;
+  programs.gnupg.agent.pinentryFlavor = "curses";
 
   nix = {
     package = pkgs.nixFlakes;

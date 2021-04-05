@@ -20,6 +20,9 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Utility flake used for internal management
+    flake-utils.url = "github:numtide/flake-utils";
   };
 
   outputs = inputs:
@@ -84,5 +87,21 @@
             ];
           };
         };
-      };
+      }
+      // (
+        inputs.flake-utils.lib.eachDefaultSystem (
+          system:
+            let
+              pkgs = inputs.nixpkgs.legacyPackages.${system};
+              sops-pkgs = inputs.sops-nix.packages.${system};
+            in
+              {
+                devShell = pkgs.mkShell {
+                  buildInputs = with pkgs; with sops-pkgs; [ nixfmt sops-init-gpg-key ];
+                  nativeBuildInputs = with sops-pkgs; [ sops-pgp-hook ];
+                  sopsPGPKeyDirs = [ "./keys/hosts/" "./keys/users/" ];
+                };
+              }
+        )
+      );
 }
