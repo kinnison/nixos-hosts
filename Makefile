@@ -31,10 +31,10 @@ enter:
 	sudo nixos-enter --root /mnt
 
 configure-user: configurations/$(HOST)/config.nix
-	@USER=$$($(MAKE) username); PAMYUBI=$$($(MAKE) pam-yubico-enabled); \
+	@USER=$$($(MAKE) -s username); PAMYUBI=$$($(MAKE) -s pam-yubico-enabled); \
 	echo "*** Set $${USER}'s password"; \
 	sudo nixos-enter --root /mnt -- passwd $${USER}; \
-	if [ "x$$PAMYBI" = "xtrue" ]; then \
+	if [ "x$$PAMYUBI" = "xtrue" ]; then \
 		echo "*** Set up yubikey entry for $${USER}"; \
 		sudo nixos-enter --root /mnt -- sudo -u $${USER} ykpamcfg -2 -v; \
 	fi
