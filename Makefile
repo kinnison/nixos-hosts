@@ -71,3 +71,6 @@ gen-ssh-keys:
 	mkdir -p keys/hosts
 	nix develop -c sops -d --extract '["ssh_host_rsa_key"]' configurations/$(HOST)/secrets/secrets.yaml | \
 	    nix-shell -p ssh-to-pgp --run "ssh-to-pgp -o keys/hosts/$(HOST).asc"
+
+update-keys: configurations/$(HOST)/secrets/secrets.yaml
+	nix develop -c sops updatekeys $<

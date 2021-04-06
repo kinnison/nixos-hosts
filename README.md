@@ -46,3 +46,35 @@ following pre-configuring...
 9. The **final** thing you need to do is to write a system definition into the
    `flake.nix` file which anchors the whole shebang.
 10. Commit all that to the repo and you're ready to rock and roll.
+
+# Dotfiles
+
+Be aware this module uses
+[Daniel's dotfiles](https://github.com/kinnison/dotfiles/) to satisfy the
+initial user's home directory needs. It uses home-manager for this.
+
+Right now, I think this repo is the only way to successfully apply such
+dotfiles, sorry.
+
+# Performing an installation
+
+Assuming you have followed the above and prepared the host configuration you
+desire, the installation process (messy though it is) is currently:
+
+1. Boot the ISO image built via `make iso`.
+2. Acquire a copy of this repository (trivially `git clone https://...`)
+3. Plug in your yubikey containing Daniel's GPG key and `cd nixos-hosts`.
+4. If you run `make help` you'll see this sequence, but you can help things
+   along by `export HOST=whatever` rather than passing `HOST=` to all the
+   make targets...
+5. `make prepare-gpg` -- This will set up the GPG key for use, ensure it works
+6. `make disk` -- If you didn't export `HOST` above, set it on this. This will
+   do the luksFormat, make LVM, filesystems, and mount them all up into /mnt
+7. `make copy-config` -- This will copy the current git tree into /mnt/etc/nixos
+8. `make provision-ssh` -- this provision's the hosts SSH keys you made above,
+   this ensures that if you have to reinstall a system it will have the same
+   public SSH identity (and that it can access its secrets since they're
+   encrypted to the SSH identity)
+9. `make install` -- this actually runs the installation. Once complete you
+   _may_ want to enter the OS with `sudo nixos-enter --root /mnt` just to do any
+   last minute checks before you reboot into your new OS install.
