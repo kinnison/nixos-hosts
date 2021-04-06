@@ -53,7 +53,6 @@
 
   services.udev.packages = with pkgs; [ yubikey-personalization ];
   services.openssh.enable = true;
-  programs.gnupg.agent.enable = true;
 
   networking.networkmanager.enable = true;
 
