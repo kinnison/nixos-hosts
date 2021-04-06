@@ -20,6 +20,7 @@
     nodejs-12_x
     gnumake
     pinentry
+    git
   ];
 
   programs.gnupg.agent.enable = true;
