@@ -36,7 +36,7 @@ configure-user: configurations/$(HOST)/config.nix
 	sudo nixos-enter --root /mnt -- passwd $${USER}; \
 	if [ "x$$PAMYUBI" = "xtrue" ]; then \
 		echo "*** Set up yubikey entry for $${USER}"; \
-		sudo nixos-enter --root /mnt -- sudo -u $${USER} ykpamcfg -2 -v; \
+		sudo nixos-enter --root /mnt -- sudo -u $${USER} -H ykpamcfg -2 -v; \
 	fi
 
 
