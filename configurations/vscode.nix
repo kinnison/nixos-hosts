@@ -3,7 +3,6 @@ let
   extensions = (
     with pkgs.vscode-extensions; [
       bbenoist.Nix
-      ms-python.python
       ms-vscode-remote.remote-ssh
     ]
   ) ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [];
