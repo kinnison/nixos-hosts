@@ -16,11 +16,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1617707091,
-        "narHash": "sha256-2yDjFk6QTYeYOlMkEAF5ofmJVwBJDmhb4MrB3EGu33Y=",
+        "lastModified": 1617714068,
+        "narHash": "sha256-sYNU+tkR7eT91vKBuEqeES0lP+B4+5IlkHYsGFdar7U=",
         "owner": "kinnison",
         "repo": "dotfiles",
-        "rev": "8311b67d993d4e214f1c0cb3db3f6bee21c0f5b8",
+        "rev": "c501620f8b18121c3a60690a775934fd20215022",
         "type": "github"
       },
       "original": {
