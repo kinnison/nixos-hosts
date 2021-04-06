@@ -6,7 +6,6 @@
   imports = [
     ./hardware-configuration.nix
     ../gui.nix
-    ../vscode.nix
   ];
 
   sops.defaultSopsFile = ./secrets/secrets.yaml;

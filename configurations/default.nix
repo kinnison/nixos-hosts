@@ -18,4 +18,8 @@ in
   );
 
   networking.hostName = sysconfig.hostname;
+
+  # We are not sufficiently unhappy about unfree to deny ourselves the right
+  nixpkgs.config.allowUnfree = true;
+
 }
