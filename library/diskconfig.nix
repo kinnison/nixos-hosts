@@ -10,6 +10,12 @@ let
   lvs = attrNames config.lvm;
   swaps = filter (lv: config.lvm.${lv}.fs == "swap") lvs;
   fses = filter (lv: config.lvm.${lv}.fs != "swap") lvs;
+  bootfs = {
+    "/boot" = {
+      device = "/dev/$disk/by-label/boot";
+      fsType = if config.disk.efiboot then "vfat" else "ext4";
+    };
+  };
   update = a: b: a // b;
 
   swapDevices = map (

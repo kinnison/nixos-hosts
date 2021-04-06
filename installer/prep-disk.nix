@@ -64,7 +64,12 @@ let
   };
 
   make-volumes = [
-    (mkfs.vfat "/dev/${prefix}1" "boot")
+    (
+      if config.disk.efi-boot then
+        (mkfs.vfat "/dev/${prefix}1" "boot")
+      else
+        (mkfs.ext4 "/dev/${prefix}1" "boot")
+    )
   ] ++ map (
     volname:
       let
@@ -78,7 +83,7 @@ let
     ${builtins.concatStringsSep "\n" make-volumes}
   '';
 
-  all-filesystems = [ { mount = "/boot"; device = "/dev/${prefix}1"; } ] ++ map (
+  all-filesystems = [ { mount = "/boot"; device = "/dev/disk/by-label/boot"; } ] ++ map (
     volname:
       let
         volmount = config.lvm.${volname}.mount;
@@ -97,7 +102,16 @@ let
       volume: config.lvm.${volume}.fs == "swap"
     ) lvm-volumes
   );
-  mount-actions = all-swaps ++ map ({ mount, device }: "mkdir -p /mnt${mount}\nmount ${device} /mnt${mount}") sorted-filesystems;
+  mount-actions = all-swaps ++ map (
+    { mount, device }:
+      ''
+        while ! test -r ${device}; do
+          echo "*** Waiting for ${device}"
+          sleep 1
+        done
+        mkdir -p /mnt${mount}
+        mount ${device} /mnt${mount}''
+  ) sorted-filesystems;
 
   mount-everything = ''
     echo "*** Mounting everything up..."
