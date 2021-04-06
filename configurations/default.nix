@@ -13,7 +13,9 @@ in
     bootLoader
     configUsers
     ./defaults.nix
-  ];
+  ] ++ (
+    if sysconfig.user.yubikey then [ ./pam-yubikey.nix ] else []
+  );
 
   networking.hostName = sysconfig.hostname;
 }

@@ -19,10 +19,32 @@ help:
 	@echo "copy-config - will copy the config to /mnt, needs disk"
 	@echo "provision-ssh - will provision the SSH host keys, needs HOST=... and prepare-gpg"
 	@echo "install - will do the nixos installation, needs HOST=... and all the above"
+	@echo "configure-user - will then configure your user's password etc."
+	@echo "---"
+	@echo "enter - utility to 'enter' the install as root"
 
 # Needs --impure because it's a sodding pain
 install:
 	sudo nixos-install --root /mnt --flake "/mnt/etc/nixos#$(HOST)" -v --impure
+
+enter:
+	sudo nixos-enter --root /mnt
+
+configure-user: configurations/$(HOST)/config.nix
+	@USER=$$($(MAKE) username); PAMYUBI=$$($(MAKE) pam-yubico-enabled); \
+	echo "*** Set $${USER}'s password"; \
+	sudo nixos-enter --root /mnt -- passwd $${USER}; \
+	if [ "x$$PAMYBI" = "xtrue" ]; then \
+		echo "*** Set up yubikey entry for $${USER}"; \
+		sudo nixos-enter --root /mnt -- sudo -u $${USER} ykpamcfg -2 -v; \
+	fi
+
+
+username: configurations/$(HOST)/config.nix
+	@nix eval --impure --raw --expr '(import configurations/$(HOST)/config.nix).user.name'
+
+pam-yubico-enabled: configurations/$(HOST)/config.nix
+	@nix eval --impure --expr 'let config = (import configurations/$(HOST)/config.nix); in if config.user ? yubikey then config.user.yubikey else false'
 
 copy-config:
 	sudo mkdir -p /mnt/etc/nixos
