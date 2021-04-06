@@ -9,7 +9,7 @@
   services.xserver.enable = true;
   services.xserver.displaymanager.gdm.enable = true;
   services.xserver.desktopManager.mate.enable = true;
-  environment.mate.excludePacakges = [
+  environment.mate.excludePackages = [
     pkgs.mate.pluma
   ];
   services.xserver.displayManager.defaultSession = "mate";
