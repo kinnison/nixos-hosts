@@ -12,7 +12,7 @@ let
   fses = filter (lv: config.lvm.${lv}.fs != "swap") lvs;
   bootfs = {
     "/boot" = {
-      device = "/dev/$disk/by-label/boot";
+      device = "/dev/disk/by-label/boot";
       fsType = if config.disk.efi-boot then "vfat" else "ext4";
     };
   };
