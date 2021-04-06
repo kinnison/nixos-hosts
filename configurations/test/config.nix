@@ -37,8 +37,7 @@
 
   user = {
     name = "dsilvers";
-    passwd = "$6$rounds=1000000$yddICPnUR8pNaYl$AYx3HNfsxXa71qN9H0yMaoJs7rwHTHswZOoAbLtAnnFgjzmM9lAhxIHVuzDEcSrEArfK/mJWXTRnFvc4y8d3c/
-";
+    passwd = "$5$rounds=1000000$yU6CboKQelTXD$57k5Y7mu78A.XwH9OJ4SemKGEYP42ES4zz.5/D0qAOD";
     groups = [];
     yubikey = true;
   };
