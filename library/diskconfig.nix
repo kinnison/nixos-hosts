@@ -25,16 +25,18 @@ let
       }
   ) swaps;
 
-  fileSystems = foldl' update {} (
-    map (
-      lv:
-        {
-          "${config.lvm.${lv}.mount}" = {
-            device = "/dev/disk/by-label/${lv}";
-            fsType = "${config.lvm.${lv}.fs}";
-          };
-        }
-    ) fses
+  fileSystems = bootfs // (
+    foldl' update {} (
+      map (
+        lv:
+          {
+            "${config.lvm.${lv}.mount}" = {
+              device = "/dev/disk/by-label/${lv}";
+              fsType = "${config.lvm.${lv}.fs}";
+            };
+          }
+      ) fses
+    )
   );
 
   crypt-config = {
