@@ -5,6 +5,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ../gui.nix
   ];
 
   sops.defaultSopsFile = ./secrets/secrets.yaml;
