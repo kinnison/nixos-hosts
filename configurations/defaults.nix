@@ -55,6 +55,8 @@
   services.openssh.enable = true;
   programs.gnupg.agent.enable = true;
 
+  networking.networkmanager.enable = true;
+
   environment.systemPackages = with pkgs; [
     git # always need git
     home-manager # for homedirs
