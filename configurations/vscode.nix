@@ -6,7 +6,7 @@ let
       ms-python.python
       ms-vscode-remote.remote-ssh
     ]
-  ) ++ pkgs.vscode.utils.extensionsFromVscodeMarketplace [];
+  ) ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [];
   vscode-with-extensions = pkgs.vscode-with-extensions.override {
     vscodeExtensions = extensions;
   };
