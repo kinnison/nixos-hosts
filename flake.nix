@@ -60,7 +60,7 @@
                   home-manager.useGlobalPkgs = false;
                   home-manager.useUserPackages = true;
                   home-manager.users."${sysconfig.user.name}" =
-                    inputs.dotfiles.homeConfigurations.${config.networking.hostName};
+                    (inputs.dotfiles.homeConfigurations.${config.networking.hostName} config);
                 }
               )
             ] ++ modules;
