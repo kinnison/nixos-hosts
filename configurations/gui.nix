@@ -7,7 +7,7 @@
   # Core X server and related configuration needed for any computer
   # I use with a GUI
   services.xserver.enable = true;
-  services.xserver.displaymanager.gdm.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.mate.enable = true;
   environment.mate.excludePackages = [
     pkgs.mate.pluma
