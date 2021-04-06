@@ -37,6 +37,8 @@
 
   user = {
     name = "dsilvers";
+    passwd = "$6$rounds=1000000$yddICPnUR8pNaYl$AYx3HNfsxXa71qN9H0yMaoJs7rwHTHswZOoAbLtAnnFgjzmM9lAhxIHVuzDEcSrEArfK/mJWXTRnFvc4y8d3c/
+";
     groups = [];
   };
 }
