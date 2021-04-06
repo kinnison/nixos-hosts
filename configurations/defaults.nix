@@ -58,6 +58,8 @@
   environment.systemPackages = with pkgs; [
     git # always need git
     home-manager # for homedirs
+    vim # because why wouldn't you?
+    gnumake # because makefiles are useful everywhere, right?
   ];
 
   # Do not alter this unless instructed to during an upgrade to a newer
