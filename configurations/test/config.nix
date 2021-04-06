@@ -37,6 +37,6 @@
 
   user = {
     name = "dsilvers";
-    groups = [ "wheel" ];
+    groups = [];
   };
 }
