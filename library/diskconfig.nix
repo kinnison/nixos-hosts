@@ -13,7 +13,7 @@ let
   bootfs = {
     "/boot" = {
       device = "/dev/$disk/by-label/boot";
-      fsType = if config.disk.efiboot then "vfat" else "ext4";
+      fsType = if config.disk.efi-boot then "vfat" else "ext4";
     };
   };
   update = a: b: a // b;
