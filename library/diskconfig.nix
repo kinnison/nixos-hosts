@@ -39,13 +39,31 @@ let
     )
   );
 
+  yubi-crypt = let
+    saltlen = if config.yubikey ? salt-length then config.yubikey.salt-length else 16;
+    keylen = if config.fde ? key-size then config.fde.key-size else 512;
+    storage = "/dev/${config.disk.prefix}1";
+    fs = if config.disk.efi-boot then "vfat" else "ext4";
+  in
+    if config.yubikey.enable then {
+      yubikey = {
+        slot = 2;
+        twoFactor = true;
+        keyLength = keylen;
+        saltLength = saltlen;
+        storage = storage;
+        fsType = fs;
+        path = "/crypt-storage/default";
+      };
+    } else {};
+
   crypt-config = {
     boot.initrd.luks.devices = {
       "pv-${hostname}" = {
         device = "/dev/${config.disk.prefix}2";
         preLVM = true;
         allowDiscards = true;
-      };
+      } // yubi-crypt;
     };
   };
 
