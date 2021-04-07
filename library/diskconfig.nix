@@ -41,7 +41,7 @@ let
 
   yubi-crypt = let
     saltlen = if config.yubikey ? salt-length then config.yubikey.salt-length else 16;
-    keylen = if config.fde ? key-size then config.fde.key-size else 512;
+    keylen = (if config.fde ? key-size then config.fde.key-size else 512) / 8;
     storage = "/dev/${config.disk.prefix}1";
     fs = if config.disk.efi-boot then "vfat" else "ext4";
   in
