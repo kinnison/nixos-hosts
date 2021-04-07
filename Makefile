@@ -94,5 +94,10 @@ gen-ssh-keys:
 	nix develop -c sops -d --extract '["ssh_host_rsa_key"]' configurations/$(HOST)/secrets/secrets.yaml | \
 	    nix-shell -p ssh-to-pgp --run "ssh-to-pgp -o keys/hosts/$(HOST).asc"
 
+gen-luks-recovery: configurations/$(HOST)/secrets/secrets.yaml
+	echo "Preparing LUKS recovery for $(HOST)"
+	PW=$$(nix develop -c pwgen -c -n -s 32 1); \
+	nix develop -c sops --set '["luks-recovery-passphrase"] "'$${PW}'"' configurations/$(HOST)/secrets/secrets.yaml
+
 update-keys: configurations/$(HOST)/secrets/secrets.yaml
 	nix develop -c sops updatekeys $<

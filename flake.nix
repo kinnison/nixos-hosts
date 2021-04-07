@@ -107,7 +107,7 @@
             in
               {
                 devShell = pkgs.mkShell {
-                  buildInputs = with pkgs; with sops-pkgs; [ nixfmt sops-init-gpg-key ];
+                  buildInputs = with pkgs; with sops-pkgs; [ pwgen nixfmt sops-init-gpg-key ];
                   nativeBuildInputs = with sops-pkgs; [ sops-pgp-hook ];
                   sopsPGPKeyDirs = [ "./keys/hosts/" "./keys/users/" ];
                 };

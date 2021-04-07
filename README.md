@@ -43,9 +43,14 @@ following pre-configuring...
    for including that key.
 8. We're almost done, now run `make update-keys HOST=$hostname` which will
    ensure that the secrets are appropriately encrypted.
-9. The **final** thing you need to do is to write a system definition into the
-   `flake.nix` file which anchors the whole shebang.
-10. Commit all that to the repo and you're ready to rock and roll.
+9. If you're intending to use FDE on this host then you will need to generate
+   a recovery key-file which will be programmed into slot zero of the LUKS.
+   to do this, run `make gen-luks-recovery HOST=$hostname`. This will be
+   encrypted with sops and so will be easy to manage. Note, the recovery key
+   will still be a 'passphrase' so it _can_ be typed into a system to boot it.
+10. The **final** thing you need to do is to write a system definition into the
+    `flake.nix` file which anchors the whole shebang.
+11. Commit all that to the repo and you're ready to rock and roll.
 
 # Dotfiles
 
