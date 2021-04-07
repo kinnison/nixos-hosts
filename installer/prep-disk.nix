@@ -50,9 +50,10 @@ let
       echo -n "Enter passphrase again: "
       read -s pw2
       echo
-      if [ "x$pw" == "x$pw2" ]; then
+      if [ "x$pw1" == "x$pw2" ]; then
         echo "Passwords match, continuing"
-        continue
+        k_user="$pw1"
+        break
       fi
       echo "Passwords do not match, try again..."
     done
@@ -63,7 +64,7 @@ let
     response="$(ykchalresp -2 -x $challenge 2>/dev/null)"
     KEY_LENGTH=${toString crypt-key-size}
     ITERATIONS=1000000
-    k_luks="$(echo -n "$pw1" | pbkdf-sha512 $((KEY_KENGTH / 8)) $ITERATIONS $response | rbtohex)"
+    k_luks="$(echo -n "$k_user" | pbkdf2-sha512 $(($KEY_LENGTH / 8)) $ITERATIONS $response | rbtohex)"
     echo -n "$k_luks" | hextorb | cryptsetup --key-file=/tmp/recovery.key luksAddKey /dev/${prefix}2
   '' else ''
     echo "*** Adding user password to crypt..."
