@@ -60,12 +60,15 @@ let
     } else {};
 
   crypt-config = {
-    boot.initrd.luks.devices = {
-      "pv-${hostname}" = {
-        device = "/dev/${config.disk.prefix}2";
-        preLVM = true;
-        allowDiscards = true;
-      } // yubi-crypt;
+    boot.initrd.luks = {
+      devices = {
+        "pv-${hostname}" = {
+          device = "/dev/${config.disk.prefix}2";
+          preLVM = true;
+          allowDiscards = true;
+        } // yubi-crypt;
+      };
+      yubikeySupport = config.yubikey.enable;
     };
   };
 
