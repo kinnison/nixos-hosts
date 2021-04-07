@@ -26,13 +26,13 @@ let
   lvm-pvdevice = if config.fde.enable then "/dev/mapper/${lvm-pvname}" else "/dev/${prefix}2";
   lvm-vgname = "${hostname}";
   crypt-cipher = if config.fde ? cipher then config.fde.cipher else "aes-xts-plain64";
-  crypt-key-size = if config.fde ? key-size then config.fde.key-size else "512";
+  crypt-key-size = if config.fde ? key-size then config.fde.key-size else 512;
   crypt-hash = if config.fde ? hash then config.fde.hash else "sha512";
   salt-length = if config.yubikey ? salt-length then config.yubikey.salt-length else 16;
   crypt-setup = if config.fde.enable then ''
     echo "*** Setting up FDE using /dev/${prefix}2"
     echo -n "$RECOVERY" > /tmp/recovery.key
-    cryptsetup --batch-mode --cipher ${crypt-cipher} --key-size ${crypt-key-size} --hash ${crypt-hash} luksFormat /dev/${prefix}2 /tmp/recovery.key
+    cryptsetup --batch-mode --cipher ${crypt-cipher} --key-size ${toString crypt-key-size} --hash ${crypt-hash} luksFormat /dev/${prefix}2 /tmp/recovery.key
     echo "*** Verifying we can luksOpen with recovery passphrase"
     echo -n "$RECOVERY" | cryptsetup --allow-discards luksOpen /dev/${prefix}2 ${lvm-pvname}
     ${if config.yubikey.enable then ''
@@ -56,12 +56,12 @@ let
       fi
       echo "Passwords do not match, try again..."
     done
-    SALT_LENGTH=${salt-length}
+    SALT_LENGTH=${toString salt-length}
     salt="$(dd if=/dev/random bs=1 count=$SALT_LENGTH 2>/dev/null | rbtohex)"
     echo "   *** Computing the initial challenge/response with openssl and the yubikey"
     challenge="$(echo -n $salt | openssl dgst -binary -sha512 | rbtohex)"
     response="$(ykchalresp -2 -x $challenge 2>/dev/null)"
-    KEY_LENGTH=${crypt-key-size}
+    KEY_LENGTH=${toString crypt-key-size}
     ITERATIONS=1000000
     k_luks="$(echo -n "$pw1" | pbkdf-sha512 $((KEY_KENGTH / 8)) $ITERATIONS $response | rbtohex)"
     echo -n "$k_luks" | hextorb | cryptsetup --key-file=/tmp/recovery.key luksAddKey /dev/${prefix}2
