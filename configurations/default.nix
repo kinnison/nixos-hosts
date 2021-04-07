@@ -14,7 +14,7 @@ in
     configUsers
     ./defaults.nix
   ] ++ (
-    if sysconfig.user.yubikey then [ ./pam-yubikey.nix ] else []
+    if sysconfig.yubikey.enable then [ ./pam-yubikey.nix ] else []
   );
 
   networking.hostName = sysconfig.hostname;

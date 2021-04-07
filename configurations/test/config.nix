@@ -12,6 +12,7 @@
   };
 
   fde.enable = true;
+  yubikey.enable = true;
 
   lvm = {
     root = {
@@ -39,6 +40,5 @@
     name = "dsilvers";
     passwd = "$5$rounds=1000000$yU6CboKQelTXD$57k5Y7mu78A.XwH9OJ4SemKGEYP42ES4zz.5/D0qAOD";
     groups = [];
-    yubikey = true;
   };
 }

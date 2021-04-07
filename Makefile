@@ -31,7 +31,7 @@ enter:
 	sudo nixos-enter --root /mnt
 
 configure-user: configurations/$(HOST)/config.nix
-	@USER=$$($(MAKE) -s username); PAMYUBI=$$($(MAKE) -s pam-yubico-enabled); \
+	@USER=$$($(MAKE) -s username); PAMYUBI=$$($(MAKE) -s yubikey-enabled); \
 	echo "*** Set $${USER}'s password"; \
 	sudo nixos-enter --root /mnt -- passwd $${USER}; \
 	if [ "x$$PAMYUBI" = "xtrue" ]; then \
@@ -43,8 +43,11 @@ configure-user: configurations/$(HOST)/config.nix
 username: configurations/$(HOST)/config.nix
 	@nix eval --impure --raw --expr '(import configurations/$(HOST)/config.nix).user.name'
 
-pam-yubico-enabled: configurations/$(HOST)/config.nix
-	@nix eval --impure --expr 'let config = (import configurations/$(HOST)/config.nix); in if config.user ? yubikey then config.user.yubikey else false'
+yubikey-enabled: configurations/$(HOST)/config.nix
+	@nix eval --impure --expr 'let config = (import configurations/$(HOST)/config.nix); in if config.yubikey ? enable then config.yubikey.enable else false'
+
+fde-enabled: configurations/$(HOST)/config.nix
+	@nix eval --impure --expr 'let config = (import configurations/$(HOST)/config.nix); in if config.fde ? enable then config.fde.enable else false'
 
 copy-config:
 	sudo mkdir -p /mnt/etc/nixos
