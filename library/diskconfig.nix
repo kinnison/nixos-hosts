@@ -51,9 +51,11 @@ let
         twoFactor = true;
         keyLength = keylen;
         saltLength = saltlen;
-        storage = storage;
-        fsType = fs;
-        path = "/crypt-storage/default";
+        storage = {
+          device = storage;
+          fsType = fs;
+          path = "/crypt-storage/default";
+        };
       };
     } else {};
 
