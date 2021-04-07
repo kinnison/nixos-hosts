@@ -1,6 +1,6 @@
 # This module defines a small NixOS installation CD.  It does not
 # contain any graphical stuff.
-{ config, pkgs, ... }:
+{ config, pkgs, nixpkgs, ... }:
 {
   imports = [
     # Promoted to top level
@@ -21,6 +21,8 @@
     gnumake
     pinentry
     git
+    openssl
+    installer.pbkdf2-sha512
   ];
 
   programs.gnupg.agent.enable = true;

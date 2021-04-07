@@ -82,6 +82,17 @@
             nixpkgs.lib.nixosSystem {
               system = "x86_64-linux";
               modules = [
+                (
+                  { ... }: {
+                    nixpkgs.overlays = [
+                      (
+                        final: prev: {
+                          installer = (import ./installer/pkgs { pkgs = prev; });
+                        }
+                      )
+                    ];
+                  }
+                )
                 "${nixpkgs.outPath}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
                 "${nixpkgs.outPath}/nixos/modules/installer/cd-dvd/channel.nix"
                 inputs.sops-nix.nixosModules.sops
