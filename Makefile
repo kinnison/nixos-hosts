@@ -55,7 +55,15 @@ copy-config:
 
 disk: configurations/$(HOST)/config.nix
 	SCRIPT=$$(nix eval --impure --raw --expr 'builtins.toFile "disk.sh" (import installer/prep-disk.nix { hostname = "$(HOST)"; config = (import configurations/$(HOST)/config.nix);})'); \
-	sudo bash $$SCRIPT
+	sudo env RECOVERY="$$($(MAKE) -s fde-recovery-password)" bash $$SCRIPT
+
+fde-recovery-password: configurations/$(HOST)/secrets/secrets.yaml
+	@FDE=$$($(MAKE) -s fde-enabled); \
+	if [ "x$$FDE" = "xtrue" ]; then \
+	    nix develop -c sops -d --extract '["luks-recovery-passphrase"]' configurations/$(HOST)/secrets/secrets.yaml; \
+	else \
+		echo -n ignored; \
+	fi
 
 prepare-gpg:
 	for KEY in keys/users/*.asc; do gpg --import $$KEY; done

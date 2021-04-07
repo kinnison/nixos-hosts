@@ -30,8 +30,17 @@ let
   crypt-hash = if config.fde ? hash then config.fde.hash else "sha512";
   crypt-setup = if config.fde.enable then ''
     echo "*** Setting up FDE using /dev/${prefix}2"
-    cryptsetup --cipher ${crypt-cipher} --key-size ${crypt-key-size} --hash ${crypt-hash} luksFormat /dev/${prefix}2
-    cryptsetup luksOpen /dev/${prefix}2 ${lvm-pvname}
+    echo -n "$RECOVERY" > /tmp/recovery.key
+    cryptsetup --cipher ${crypt-cipher} --key-size ${crypt-key-size} --hash ${crypt-hash} luksFormat /dev/${prefix}2 /tmp/recovery.key
+    echo "*** Verifying we can luksOpen with recovery passphrase"
+    echo -n "$RECOVERY" | cryptsetup luksOpen /dev/${prefix}2 ${lvm-pvname}
+    ${if config.yubikey.enable then ''
+    echo "*** Adding a passphrase using the yubkey (slot 2)..."
+  '' else ''
+    echo "*** Adding user password to crypt..."
+    cryptsetup --key-file=/tmp/recovery.key luksAddKey /dev/${prefix}2
+  ''}
+    echo "*** Crypt setup completed"
   '' else ''
     echo "*** No crypt setup required"
   '';
