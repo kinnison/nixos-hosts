@@ -59,16 +59,22 @@ let
       };
     } else {};
 
+  yubi-extras = if config.yubikey.enable then
+    [ "vfat" "nls_cp437" "nls_iso8859-1" "usbhid" ] else [];
+
   crypt-config = {
-    boot.initrd.luks = {
-      devices = {
-        "pv-${hostname}" = {
-          device = "/dev/${config.disk.prefix}2";
-          preLVM = true;
-          allowDiscards = true;
-        } // yubi-crypt;
+    boot.initrd = {
+      luks = {
+        devices = {
+          "pv-${hostname}" = {
+            device = "/dev/${config.disk.prefix}2";
+            preLVM = true;
+            allowDiscards = true;
+          } // yubi-crypt;
+        };
+        yubikeySupport = config.yubikey.enable;
       };
-      yubikeySupport = config.yubikey.enable;
+      kernelModules = yubi-extras;
     };
   };
 
