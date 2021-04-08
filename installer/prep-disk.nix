@@ -9,17 +9,12 @@ let
   bootsize = config.disk.bootsize;
   prefix = config.disk.prefix;
   parted-script = ''
-    _parted_script () {
-        echo "mklabel ${if is-efi then "gpt" else "msdos"}"
-        echo "mkpart 1 1 ${bootsize}"
-        echo "set 1 ${if is-efi then "esp" else "legacy_boot"} on"
-        echo "mkpart 2 ${bootsize} 100%"
-        echo "set 2 lvm on"
-    }
-
     echo "*** Partitioning /dev/${base} for use"
-    _parted_script | parted --script --align optimal /dev/${base}
-
+    parted --script --align optimal /dev/${base} mklabel ${if is-efi then "gpt" else "msdos"}
+    parted --script --align optimal /dev/${base} mkpart 1 1 ${bootsize}
+    parted --script --align optimal /dev/${base} set 1 ${if is-efi then "esp" else "legacy_boot"} on
+    parted --script --align optimal /dev/${base} mkpart 2 ${bootsize} 100%
+    parted --script --align optimal /dev/${base} set 2 lvm on
   '';
 
   lvm-pvname = "pv-${hostname}";
