@@ -8,7 +8,7 @@
     base = "vda";
     prefix = "vda";
     bootsize = "512MiB";
-    efi-boot = false;
+    efi-boot = true;
   };
 
   fde.enable = true;
