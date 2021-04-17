@@ -38,6 +38,7 @@
   services.udev.packages = [ pkgs.yubikey-personalization ];
 
   services.sshd.enable = true;
+  services.thinkfan.enable = true; # For thinkpad laptops this is useful to prevent overheating on old units.
 
   i18n.defaultLocale = "en_GB.UTF-8";
   console.keyMap = "uk";
