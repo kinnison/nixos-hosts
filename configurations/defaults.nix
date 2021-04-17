@@ -24,8 +24,11 @@
     defaultUserShell = pkgs.zsh;
   };
 
-  programs = {
-    zsh.enable = true;
+  programs.zsh = {
+    enable = true;
+    syntaxHilighting.enable = true;
+    autoSuggestions.enable = true;
+    vteIntegration = true;
   };
 
   fonts = {
