@@ -26,8 +26,8 @@
 
   programs.zsh = {
     enable = true;
-    syntaxHilighting.enable = true;
-    autoSuggestions.enable = true;
+    syntaxHighlighting.enable = true;
+    autosuggestions.enable = true;
     vteIntegration = true;
   };
 
