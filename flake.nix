@@ -107,6 +107,14 @@
               (import ./configurations/test)
             ];
           };
+          parasomnix = make-nixos-system {
+            sysconfig = loadConfig "parasomnix";
+            nixpkgs = inputs.nixpkgs;
+            system = "x86_64-linux";
+            modules = [
+              (import ./configurations/parasomnix)
+            ];
+          };
         };
       }
       // (

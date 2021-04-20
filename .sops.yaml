@@ -1,15 +1,21 @@
 keys:
   - &daniel 19568523759E2A2858F4606B3CCEBABE206C3B69
   - &test 6b29b1f4460ac24e53795ace36ef43006bdcca1a
+  - &parasomnix 5eecfbdb11531b51cd18621335740b045ae0561a
 creation_rules:
   - path_regex: configurations/test/secrets/[^/]+\.yaml$
     key_groups:
       - pgp:
           - *daniel
           - *test
+  - path_regex: configurations/parasomnix/secrets/[^/]+\.yaml$
+    key_groups:
+      - pgp:
+          - *daniel
+          - *parasomnix
 
-# This group should always be last and is a fallback to use
-# just the primary GPG key
+  # This group should always be last and is a fallback to use
+  # just the primary GPG key
   - key_groups:
       - pgp:
           - *daniel
