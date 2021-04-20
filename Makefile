@@ -31,9 +31,11 @@ enter:
 	sudo nixos-enter --root /mnt
 
 configure-user: configurations/$(HOST)/config.nix
-	@USER=$$($(MAKE) -s username); PAMYUBI=$$($(MAKE) -s yubikey-enabled); \
-	echo "*** Set $${USER}'s password"; \
-	sudo nixos-enter --root /mnt -- passwd $${USER}; \
+	@USER=$$($(MAKE) -s username); SKIPPASS=$$($(MAKE) -s passwdpreset); PAMYUBI=$$($(MAKE) -s yubikey-enabled); \
+	if [ "x$$SKIPPASS" = "xfalse" ]; then \
+		echo "*** Set $${USER}'s password"; \
+		sudo nixos-enter --root /mnt -- passwd $${USER}; \
+	fi; \
 	if [ "x$$PAMYUBI" = "xtrue" ]; then \
 		echo "*** Set up yubikey entry for $${USER}"; \
 		sudo nixos-enter --root /mnt -- sudo -u $${USER} -H ykpamcfg -2 -v; \
@@ -42,6 +44,9 @@ configure-user: configurations/$(HOST)/config.nix
 
 username: configurations/$(HOST)/config.nix
 	@nix eval --impure --raw --expr '(import configurations/$(HOST)/config.nix).user.name'
+
+passwdpreset: configurations/$(HOST)/config.nix
+	@nix eval --impure --expr 'let config = (import configurations/$(HOST)/config.nix); in config.user ? passwd'
 
 yubikey-enabled: configurations/$(HOST)/config.nix
 	@nix eval --impure --expr 'let config = (import configurations/$(HOST)/config.nix); in if config.yubikey ? enable then config.yubikey.enable else false'
