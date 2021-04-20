@@ -32,7 +32,7 @@ enter:
 	sudo nixos-enter --root /mnt
 
 gen-hardware-config: configurations/$(HOST)/config.nix
-	nixos-generate-config --root /mnt --no-filesystem --show-hardware-config > configurations/$(HOST)/hardware-configuration.nix
+	nixos-generate-config --root /mnt --no-filesystems --show-hardware-config > configurations/$(HOST)/hardware-configuration.nix
 
 configure-user: configurations/$(HOST)/config.nix
 	@USER=$$($(MAKE) -s username); SKIPPASS=$$($(MAKE) -s passwdpreset); PAMYUBI=$$($(MAKE) -s yubikey-enabled); \
