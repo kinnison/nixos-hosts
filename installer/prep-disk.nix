@@ -58,7 +58,7 @@ let
     challenge="$(echo -n $salt | openssl dgst -binary -sha512 | rbtohex)"
     response="$(ykchalresp -2 -x $challenge 2>/dev/null)"
     KEY_LENGTH=${toString crypt-key-size}
-    ITERATIONS=1000000
+    ITERATIONS=100000
     k_luks="$(echo -n "$k_user" | pbkdf2-sha512 $(($KEY_LENGTH / 8)) $ITERATIONS $response | rbtohex)"
     echo -n "$k_luks" | hextorb | cryptsetup --key-file=/tmp/recovery.key luksAddKey /dev/${prefix}2
   '' else ''
