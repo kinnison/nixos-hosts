@@ -48,9 +48,12 @@ following pre-configuring...
    to do this, run `make gen-luks-recovery HOST=$hostname`. This will be
    encrypted with sops and so will be easy to manage. Note, the recovery key
    will still be a 'passphrase' so it _can_ be typed into a system to boot it.
-10. The **final** thing you need to do is to write a system definition into the
-    `flake.nix` file which anchors the whole shebang.
-11. Commit all that to the repo and you're ready to rock and roll.
+10. Ensure the dotfiles repo you intend to use has a configuration for the new
+    system ready to go.
+11. Write a system definition into the `flake.nix` file which anchors the whole
+    shebang.
+12. Commit all that to the repo, then run `nix flake update --commit-lock-file`,
+    push to your remote, and you're ready to rock and roll.
 
 # Dotfiles
 
