@@ -46,4 +46,7 @@
 
   users.users.nixos.openssh.authorizedKeys.keys = [ "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLoJTD9hp6oyx0skgWKpqfasjGoaMf2M6qQZhT+NqxXOKpcBz7jBu5DVlBbEE29Ar1ZYMMHa7AzsTgyLtMRougg= dsilvers@listless" ];
 
+  # For wifi etc.
+  networking.network-manager.enable = true;
+
 }
