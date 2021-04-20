@@ -11,9 +11,9 @@ let
   parted-script = ''
     echo "*** Partitioning /dev/${base} for use"
     parted --script --align optimal /dev/${base} mklabel ${if is-efi then "gpt" else "msdos"}
-    parted --script --align optimal /dev/${base} mkpart 1 1 ${bootsize}
-    parted --script --align optimal /dev/${base} set 1 ${if is-efi then "esp" else "legacy_boot"} on
-    parted --script --align optimal /dev/${base} mkpart 2 ${bootsize} 100%
+    parted --script --align optimal /dev/${base} mkpart ${if is-efi then "1" else "primary"} 1 ${bootsize}
+    parted --script --align optimal /dev/${base} set 1 ${if is-efi then "esp" else "boot"} on
+    parted --script --align optimal /dev/${base} mkpart ${if is-efi then "2" else "primary"} ${bootsize} 100%
     parted --script --align optimal /dev/${base} set 2 lvm on
   '';
 
