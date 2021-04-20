@@ -75,11 +75,17 @@ desire, the installation process (messy though it is) is currently:
 5. `make prepare-gpg` -- This will set up the GPG key for use, ensure it works
 6. `make disk` -- If you didn't export `HOST` above, set it on this. This will
    do the luksFormat, make LVM, filesystems, and mount them all up into /mnt
-7. `make copy-config` -- This will copy the current git tree into /mnt/etc/nixos
-8. `make provision-ssh` -- this provision's the hosts SSH keys you made above,
+7. If you lack it, you can `make gen-hardware-config` now to write out the config.
+   Remember to commit it and push later once everything is done. This can be
+   done after booting into the new system as you see fit.
+8. `make copy-config` -- This will copy the current git tree into /mnt/etc/nixos
+9. `make provision-ssh` -- this provision's the hosts SSH keys you made above,
    this ensures that if you have to reinstall a system it will have the same
    public SSH identity (and that it can access its secrets since they're
    encrypted to the SSH identity)
-9. `make install` -- this actually runs the installation. Once complete you
-   _may_ want to enter the OS with `sudo nixos-enter --root /mnt` just to do any
-   last minute checks before you reboot into your new OS install.
+10. `make install` -- this actually runs the installation.
+11. Once the installation completes, you can run `make configure-user` to ensure
+    that any user configuration (passwords, yubikey chalresp, etc.) is done.
+12. Once all that is done, you _may_ want to enter the OS with `make enter` just
+    make any fiddlings.
+13. Now you can reboot into your new system.

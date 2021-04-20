@@ -16,6 +16,7 @@ help:
 	@echo "---"
 	@echo "prepare-gpg - will prepare the system for GPG"
 	@echo "disk - will set up the disk, needs HOST=..."
+	@echo "gen-hardware-config - will prepare hardware-configuration.nix, needs disk, optional"
 	@echo "copy-config - will copy the config to /mnt, needs disk"
 	@echo "provision-ssh - will provision the SSH host keys, needs HOST=... and prepare-gpg"
 	@echo "install - will do the nixos installation, needs HOST=... and all the above"
@@ -29,6 +30,9 @@ install:
 
 enter:
 	sudo nixos-enter --root /mnt
+
+gen-hardware-config: configurations/$(HOST)/config.nix
+	nixos-generate-config --root /mnt --no-filesystem --show-hardware-config > configurations/$(HOST)/hardware-configuration.nix
 
 configure-user: configurations/$(HOST)/config.nix
 	@USER=$$($(MAKE) -s username); SKIPPASS=$$($(MAKE) -s passwdpreset); PAMYUBI=$$($(MAKE) -s yubikey-enabled); \
