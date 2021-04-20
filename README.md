@@ -69,7 +69,8 @@ dotfiles, sorry.
 Assuming you have followed the above and prepared the host configuration you
 desire, the installation process (messy though it is) is currently:
 
-1. Boot the ISO image built via `make iso`.
+1. Boot the ISO image built via `make iso` and ensure you have networking. This
+   may involve running `sudo nmcli device wifi connect APNAME password PASSWORD`.
 2. Acquire a copy of this repository (trivially `git clone https://...`)
 3. Plug in your yubikey containing Daniel's GPG key and `cd nixos-hosts`.
 4. If you run `make help` you'll see this sequence, but you can help things
@@ -81,6 +82,10 @@ desire, the installation process (messy though it is) is currently:
 7. If you lack it, you can `make gen-hardware-config` now to write out the config.
    Remember to commit it and push later once everything is done. This can be
    done after booting into the new system as you see fit.
+   If you're using a yubikey you should check for usbhid in this or it won't work
+   later.
+   Once you've done this, you should git add it before you proceed, or the flake
+   won't work.
 8. `make copy-config` -- This will copy the current git tree into /mnt/etc/nixos
 9. `make provision-ssh` -- this provision's the hosts SSH keys you made above,
    this ensures that if you have to reinstall a system it will have the same
