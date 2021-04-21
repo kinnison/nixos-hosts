@@ -26,7 +26,7 @@ help:
 
 # Needs --impure because it's a sodding pain
 install:
-	sudo nixos-install --root /mnt --flake "/mnt/etc/nixos#$(HOST)" -v --impure
+	sudo nixos-install --root /mnt --flake "/mnt/etc/nixos#$(HOST)" -v --impure --no-root-passwd
 
 enter:
 	sudo nixos-enter --root /mnt
