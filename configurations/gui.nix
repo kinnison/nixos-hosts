@@ -9,8 +9,20 @@
   services.xserver.enable = true;
   services.xserver.displayManager.lightdm.enable = true;
   services.xserver.desktopManager.mate.enable = true;
-  environment.mate.excludePackages = [
-    pkgs.mate.pluma
+  environment.mate.excludePackages = with pkgs.mate; [
+    eom
+    mate-applets
+    mate-backgrounds
+    mate-calc
+    mate-indicator-applet
+    mate-media
+    mate-netbook
+    mate-sensors-applet
+    mate-system-monitor
+    mate-user-guide
+    mate-utils
+    mozo
+    pluma
   ];
   services.xserver.displayManager.defaultSession = "mate";
   services.xserver.windowManager.xmonad = {
