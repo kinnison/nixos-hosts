@@ -13,4 +13,9 @@
   sops.secrets.ssh_host_rsa_key = {};
 
   services.thinkfan.enable = true;
+
+  hardware.trackpoint = {
+    enable = true;
+    emulateWheel = true;
+  };
 }
