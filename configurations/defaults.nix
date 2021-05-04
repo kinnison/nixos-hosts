@@ -21,9 +21,7 @@
   i18n.defaultLocale = lib.mkDefault "en_GB.UTF-8";
   console.keyMap = lib.mkDefault "uk";
 
-  users = {
-    defaultUserShell = pkgs.zsh;
-  };
+  users = { defaultUserShell = pkgs.zsh; };
 
   programs.zsh = {
     enable = true;
@@ -59,6 +57,9 @@
   services.openssh.enable = true;
 
   networking.networkmanager.enable = true;
+
+  # Firmware management
+  services.fwupd.enable = true;
 
   environment.systemPackages = with pkgs; [
     git # always need git
