@@ -11,17 +11,16 @@
         "nixpkgs": [
           "nixpkgs"
         ],
-        "nixpkgs-kinnison": "nixpkgs-kinnison",
         "nixpkgs-unstable": [
           "nixpkgs-unstable"
         ]
       },
       "locked": {
-        "lastModified": 1620161794,
-        "narHash": "sha256-ojJ3mpYs9WCvA/dkMSWQfUUPbRIYp03UOFpgaXy0wb4=",
+        "lastModified": 1620163183,
+        "narHash": "sha256-WNPrtZpHDN66AUVgG1NiROi+7UE00sO78Kvm1vTP5oo=",
         "owner": "kinnison",
         "repo": "dotfiles",
-        "rev": "6ad7d351ef6e1e23964397d96e1f0e330d51c33a",
+        "rev": "bc0d89d8b22204d18179f1d4b2828d4a6d430c49",
         "type": "github"
       },
       "original": {
@@ -94,22 +93,6 @@
       "original": {
         "owner": "nixos",
         "ref": "nixos-20.09",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs-kinnison": {
-      "locked": {
-        "lastModified": 1619640726,
-        "narHash": "sha256-Mqyjm5OXdHswufzznxahT7iWe/l9Q0MKON/zqvErfKo=",
-        "owner": "kinnison",
-        "repo": "nixpkgs",
-        "rev": "c93888b3a90ad42b33716c61afa13653f18c03b4",
-        "type": "github"
-      },
-      "original": {
-        "owner": "kinnison",
-        "ref": "update-vscode-python",
         "repo": "nixpkgs",
         "type": "github"
       }
