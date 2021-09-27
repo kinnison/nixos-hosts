@@ -11,11 +11,13 @@ let
   efi-boot = {
     boot.loader = {
       efi.canTouchEfiVariables = true;
-      systemd-boot = {
+      grub = {
+        devices = [ "nodev" ];
         enable = true;
-        configurationLimit = 5;
-        editor = false;
-      };
+        efiSupport = true;
+      } // (if config ? grubExtras then {i
+        extraEntries = config.grubExtras;
+      } else {});
     };
   };
 in

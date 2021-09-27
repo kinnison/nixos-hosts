@@ -78,10 +78,10 @@ let
     };
   };
 
-  all-blocks = [
+  all-blocks = (if (if config ? use-hwconf-mounts then config.use-hwconf-mounts else false) then [] else [
     { swapDevices = swapDevices; }
     { fileSystems = fileSystems; }
-  ] ++ (if config.fde.enable then [ crypt-config ] else []);
+  ] ++ (if config.fde.enable then [ crypt-config ] else []));
 
 in
 foldl' update {} all-blocks

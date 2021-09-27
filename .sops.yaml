@@ -2,6 +2,7 @@ keys:
   - &daniel 19568523759E2A2858F4606B3CCEBABE206C3B69
   - &test 6b29b1f4460ac24e53795ace36ef43006bdcca1a
   - &parasomnix 5eecfbdb11531b51cd18621335740b045ae0561a
+  - &indolence 9601257b9a30a7927bd08a96d0bd8ba1835f858a
 creation_rules:
   - path_regex: configurations/test/secrets/[^/]+\.yaml$
     key_groups:
@@ -13,6 +14,11 @@ creation_rules:
       - pgp:
           - *daniel
           - *parasomnix
+  - path_regex: configurations/indolence/secrets/[^/]+\.yaml$
+    key_groups:
+      - pgp:
+          - *daniel
+          - *indolence
 
   # This group should always be last and is a fallback to use
   # just the primary GPG key

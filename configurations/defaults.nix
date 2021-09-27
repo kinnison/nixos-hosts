@@ -70,5 +70,5 @@
 
   # Do not alter this unless instructed to during an upgrade to a newer
   # base nixos version
-  system.stateVersion = "20.09";
+  system.stateVersion = "21.05";
 }

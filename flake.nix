@@ -5,13 +5,13 @@
 
   inputs = {
     # Basic inputs we need
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-20.09";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-21.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:nixos/nixos-hardware/master";
 
     # Stuff for home directory handling
     home-manager = {
-      url = "github:nix-community/home-manager/release-20.09";
+      url = "github:nix-community/home-manager/release-21.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -113,6 +113,14 @@
             system = "x86_64-linux";
             modules = [
               (import ./configurations/parasomnix)
+            ];
+          };
+          indolence = make-nixos-system {
+            sysconfig = loadConfig "indolence";
+            nixpkgs = inputs.nixpkgs;
+            system = "x86_64-linux";
+            modules = [
+              (import ./configurations/indolence)
             ];
           };
         };
