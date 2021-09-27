@@ -15,7 +15,7 @@ let
         devices = [ "nodev" ];
         enable = true;
         efiSupport = true;
-      } // (if config ? grubExtras then {i
+      } // (if config ? grubExtras then {
         extraEntries = config.grubExtras;
       } else {});
     };
