@@ -7,4 +7,7 @@ config:
     extraGroups = config.user.groups ++ [ "networkmanager" "wheel" ];
   } // (if config.user ? passwd then { hashedPassword = config.user.passwd; } else {});
   users.mutableUsers = false;
+  services.xserver.displayManager.sessionCommands = ''
+  . /etc/profiles/per-user/${config.user.name}/etc/profile.d/hm-session-vars.sh
+  '';
 }
