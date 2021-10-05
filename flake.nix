@@ -56,6 +56,18 @@
               inputs.home-manager.nixosModules.home-manager
               (
                 { config, ... }: {
+                  # Use the flakes' nixpkgs for commands
+                  nix = {
+                    nixPath = [ "nixpkgs=${nixpkgs}" ];
+                    registry.nixpkgs = {
+                      from = {
+                        id = "nixpkgs";
+                        type = "indirect";
+                      };
+                      flake = nixpkgs;
+                    };
+                  };
+
                   nixpkgs.overlays = overlays;
                   home-manager.useGlobalPkgs = false;
                   home-manager.useUserPackages = true;
