@@ -6,6 +6,7 @@
   imports = [
     ./hardware-configuration.nix
     ../gui.nix
+    ../steam.nix
   ];
 
   sops.defaultSopsFile = ./secrets/secrets.yaml;
