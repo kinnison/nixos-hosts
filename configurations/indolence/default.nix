@@ -7,6 +7,7 @@
     ./hardware-configuration.nix
     ../gui.nix
     ../steam.nix
+    ../podman.nix
   ];
 
   sops.defaultSopsFile = ./secrets/secrets.yaml;
