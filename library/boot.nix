@@ -10,15 +10,24 @@ let
   };
   efi-boot = {
     boot.loader = {
-      efi.canTouchEfiVariables = true;
+      efi = {
+        canTouchEfiVariables = true;
+        efiSysMountPoint = (if (if config ? efi-in-subdir then
+          config.efi-in-subdir
+        else
+          false) then
+          "/boot/efi"
+        else
+          "/boot");
+      };
       grub = {
         devices = [ "nodev" ];
         enable = true;
         efiSupport = true;
       } // (if config ? grubExtras then {
         extraEntries = config.grubExtras;
-      } else {});
+      } else
+        { });
     };
   };
-in
-if config.disk.efi-boot then efi-boot else bios-boot
+in if config.disk.efi-boot then efi-boot else bios-boot
