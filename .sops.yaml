@@ -3,6 +3,8 @@ keys:
   - &test 6b29b1f4460ac24e53795ace36ef43006bdcca1a
   - &parasomnix 5eecfbdb11531b51cd18621335740b045ae0561a
   - &indolence 9601257b9a30a7927bd08a96d0bd8ba1835f858a
+  - &cataplexy e31f31f9339df5bf6a533640a8e910fd8b74c646
+
 creation_rules:
   - path_regex: configurations/test/secrets/[^/]+\.yaml$
     key_groups:
@@ -19,6 +21,11 @@ creation_rules:
       - pgp:
           - *daniel
           - *indolence
+  - path_regex: configurations/cataplexy/secrets/[^/]+\.yaml$
+    key_groups:
+      - pgp:
+        - *daniel
+        - *cataplexy
 
   # This group should always be last and is a fallback to use
   # just the primary GPG key

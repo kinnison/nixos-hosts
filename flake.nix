@@ -135,6 +135,14 @@
               (import ./configurations/indolence)
             ];
           };
+          cataplexy = make-nixos-system {
+            sysconfig = loadConfig "cataplexy";
+            nixpkgs = inputs.nixpkgs;
+            system = "x86_64-linux";
+            modules = [
+              (import ./configurations/cataplexy)
+            ];
+          };
         };
       }
       // (
@@ -147,7 +155,7 @@
               {
                 devShell = pkgs.mkShell {
                   buildInputs = with pkgs; with sops-pkgs; [ pwgen nixfmt sops-init-gpg-key ];
-                  nativeBuildInputs = with sops-pkgs; [ sops-pgp-hook ];
+                  nativeBuildInputs = with sops-pkgs; [ sops-import-keys-hook ];
                   sopsPGPKeyDirs = [ "./keys/hosts/" "./keys/users/" ];
                 };
               }
