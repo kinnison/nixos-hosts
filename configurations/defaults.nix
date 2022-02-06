@@ -36,6 +36,8 @@
       noto-fonts
       noto-fonts-cjk
       noto-fonts-emoji
+      fira
+      fira-mono
       fira-code
       fira-code-symbols
       inconsolata
