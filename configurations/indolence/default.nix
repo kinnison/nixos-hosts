@@ -14,4 +14,5 @@
 
   services.printing = { enable = true; };
   services.printing.drivers = [ pkgs.hplip ];
+  services.teamviewer.enable = true;
 }
