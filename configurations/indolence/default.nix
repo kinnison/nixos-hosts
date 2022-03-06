@@ -4,7 +4,7 @@
 
 {
   imports =
-    [ ./hardware-configuration.nix ../gui.nix ../steam.nix ../podman.nix ];
+    [ ./hardware-configuration.nix ../gui.nix ../steam.nix ../docker.nix ];
 
   sops.defaultSopsFile = ./secrets/secrets.yaml;
 

@@ -6,7 +6,7 @@
   imports = [
     ./hardware-configuration.nix
     ../gui.nix
-    ../podman.nix
+    ../docker.nix
   ];
 
   sops.defaultSopsFile = ./secrets/secrets.yaml;
