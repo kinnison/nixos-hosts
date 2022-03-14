@@ -22,4 +22,6 @@ in
   # We are not sufficiently unhappy about unfree to deny ourselves the right
   nixpkgs.config.allowUnfree = true;
 
+  # And all our systems need fstrim
+  services.fstrim.enable = true;
 }
