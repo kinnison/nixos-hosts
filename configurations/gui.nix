@@ -30,4 +30,11 @@
     enableContribAndExtras = true;
   };
   programs.nm-applet.enable = true;
+
+  qt5 = {
+    enable = true;
+    platformTheme = "gnome";
+    style = "adwaita-dark";
+  };
+
 }
