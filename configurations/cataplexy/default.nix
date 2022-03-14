@@ -11,6 +11,13 @@
 
   sops.defaultSopsFile = ./secrets/secrets.yaml;
 
-  sops.secrets.ssh_host_rsa_key = {};
+  sops.secrets.ssh_host_rsa_key = { };
 
+  hardware.trackpoint = {
+    enable = true;
+    emulateWheel = true;
+  };
+
+  services.xserver.videoDrivers = [ "intel" ];
+  services.xserver.dpi = 150;
 }
