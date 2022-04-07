@@ -3,7 +3,8 @@
 { pkgs, lib, inputs, ... }:
 
 {
-  imports = [ ./hardware-configuration.nix ../gui.nix ../docker.nix ];
+  imports =
+    [ ./hardware-configuration.nix ../gui.nix ../docker.nix ../steam.nix ];
 
   boot.kernelPackages = pkgs.linuxPackages_5_16;
   boot.kernelParams = [ "i915.enable_psr=0" ];
