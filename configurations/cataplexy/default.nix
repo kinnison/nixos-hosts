@@ -3,11 +3,7 @@
 { pkgs, lib, inputs, ... }:
 
 {
-  imports = [
-    ./hardware-configuration.nix
-    ../gui.nix
-    ../docker.nix
-  ];
+  imports = [ ./hardware-configuration.nix ../gui.nix ../docker.nix ];
 
   boot.kernelPackages = pkgs.linuxPackages_5_16;
   boot.kernelParams = [ "i915.enable_psr=0" ];
@@ -24,10 +20,16 @@
   services.xserver.videoDrivers = [ "intel" ];
   services.xserver.dpi = 150;
   services.xserver.deviceSection = ''
-  Option "DRI" "3"
-'';
+    Option "DRI" "3"
+  '';
 
   services.tlp = {
     enable = true;
+    settings = {
+      START_CHARGE_THRESH_BAT0 = 70;
+      STOP_CHARGE_THRESH_BAT0 = 85;
+      START_CHARGE_THRESH_BAT1 = 70;
+      STOP_CHARGE_THRESH_BAT1 = 85;
+    };
   };
 }
