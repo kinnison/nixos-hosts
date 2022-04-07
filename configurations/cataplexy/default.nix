@@ -26,4 +26,8 @@
   services.xserver.deviceSection = ''
   Option "DRI" "3"
 '';
+
+  services.tlp = {
+    enable = true;
+  };
 }
