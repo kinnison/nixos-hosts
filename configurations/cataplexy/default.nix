@@ -6,7 +6,7 @@
   imports =
     [ ./hardware-configuration.nix ../gui.nix ../docker.nix ../steam.nix ];
 
-  boot.kernelPackages = pkgs.linuxPackages_5_16;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelParams = [ "i915.enable_psr=0" ];
 
   sops.defaultSopsFile = ./secrets/secrets.yaml;
@@ -17,6 +17,9 @@
     enable = true;
     emulateWheel = true;
   };
+
+  hardware.bluetooth = { enable = true; };
+  services.blueman.enable = true;
 
   services.xserver.videoDrivers = [ "intel" ];
   services.xserver.dpi = 150;
