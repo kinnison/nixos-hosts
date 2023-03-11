@@ -15,4 +15,5 @@
   services.printing = { enable = true; };
   services.printing.drivers = [ pkgs.hplip ];
   services.teamviewer.enable = true;
+  services.udev.packages = [ pkgs.qmk-udev-rules ];
 }
