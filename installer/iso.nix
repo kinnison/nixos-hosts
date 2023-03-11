@@ -17,7 +17,7 @@
   environment.systemPackages = with pkgs; [
     yubikey-personalization
     yubico-pam
-    nodejs-12_x
+    nodejs-16_x
     gnumake
     pinentry
     git
