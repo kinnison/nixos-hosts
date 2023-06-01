@@ -13,7 +13,7 @@
   };
 
   boot = {
-    cleanTmpDir = true;
+    tmp.cleanOnBoot = true;
     # plymouth.enable = true;
   };
 
