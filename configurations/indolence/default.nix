@@ -16,4 +16,11 @@
   services.printing.drivers = [ pkgs.hplip ];
   services.teamviewer.enable = true;
   services.udev.packages = [ pkgs.qmk-udev-rules ];
+  virtualisation.libvirtd = {
+    enable = true;
+    qemu = {
+      ovmf.enable = true;
+    };
+  };
+  environment.systemPackages = with pkgs; [ virt-manager ];
 }

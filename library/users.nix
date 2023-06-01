@@ -3,7 +3,7 @@ config:
 { ... }: {
   users.users.${config.user.name} = {
     isNormalUser = true;
-    extraGroups = config.user.groups ++ [ "networkmanager" "wheel" "docker" ];
+    extraGroups = config.user.groups ++ [ "networkmanager" "wheel" "docker" "libvirtd" ];
   } // (if config.user ? passwd then {
     hashedPassword = config.user.passwd;
   } else
