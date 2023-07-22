@@ -23,4 +23,9 @@
     };
   };
   environment.systemPackages = with pkgs; [ virt-manager ];
+
+  services.hardware.openrgb = {
+    enable = true;
+    motherboard = "amd";
+  };
 }
