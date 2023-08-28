@@ -22,7 +22,7 @@
   services.blueman.enable = true;
 
   services.xserver.videoDrivers = [ "intel" ];
-  services.xserver.dpi = 150;
+  services.xserver.dpi = 210;
   services.xserver.deviceSection = ''
     Option "DRI" "3"
   '';
