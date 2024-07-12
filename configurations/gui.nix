@@ -24,7 +24,7 @@
     mozo
     pluma
   ];
-  services.xserver.displayManager.defaultSession = "mate";
+  services.displayManager.defaultSession = "mate";
   services.xserver.windowManager.xmonad = {
     enable = true;
     enableContribAndExtras = true;

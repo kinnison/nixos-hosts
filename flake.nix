@@ -5,13 +5,13 @@
 
   inputs = {
     # Basic inputs we need
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:nixos/nixos-hardware/master";
 
     # Stuff for home directory handling
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.11";
+      url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -154,7 +154,7 @@
             in
               {
                 devShell = pkgs.mkShell {
-                  buildInputs = with pkgs; with sops-pkgs; [ pwgen nixfmt sops-init-gpg-key ];
+                  buildInputs = with pkgs; with sops-pkgs; [ pwgen nixfmt-classic sops-init-gpg-key ];
                   nativeBuildInputs = with sops-pkgs; [ sops-import-keys-hook ];
                   sopsPGPKeyDirs = [ "./keys/hosts/" "./keys/users/" ];
                 };
